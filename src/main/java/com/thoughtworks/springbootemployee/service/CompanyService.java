@@ -19,7 +19,7 @@ public interface CompanyService {
 
     void addCompany(Company company);
 
-    List<Company> getCompaniesByPage();
+    List<Company> getCompaniesByPage(int page, int pageSize);
 
     void updateCompany(Company company);
 

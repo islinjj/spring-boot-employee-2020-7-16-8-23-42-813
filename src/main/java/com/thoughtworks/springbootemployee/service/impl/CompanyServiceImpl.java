@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author ZHUDO2
@@ -46,8 +47,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Company> getCompaniesByPage() {
-        return null;
+    public List<Company> getCompaniesByPage(int page, int pageSize) {
+        List<Company> result = new ArrayList<>();
+        if(companies.size() < (page - 1) * pageSize){
+            return result;
+        }
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = page * pageSize - 1;
+        result = companies.stream().skip(startIndex).limit(endIndex).collect(Collectors.toList());
+        return result;
     }
 
     @Override

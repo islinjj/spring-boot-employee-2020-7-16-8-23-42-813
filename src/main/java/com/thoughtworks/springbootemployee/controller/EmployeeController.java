@@ -37,4 +37,9 @@ public class EmployeeController {
     public void updateEmployee(@RequestBody Employee employee) {
         employeeService.updateEmployee(employee);
     }
+
+    @DeleteMapping("/{employeeId}")
+    public void deleteEmployeeById (@PathVariable("employeeId") int employeeId) {
+        employeeService.deleteEmployeeById(employeeId);
+    }
 }

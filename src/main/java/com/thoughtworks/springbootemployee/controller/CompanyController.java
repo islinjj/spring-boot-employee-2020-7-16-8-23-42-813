@@ -39,4 +39,9 @@ public class CompanyController {
         return companyService.getCompaniesByPage(page, pageSize);
     }
 
+    @PutMapping
+    public void updateCompany(@RequestBody Company company) {
+        companyService.updateCompany(company);
+    }
+
 }

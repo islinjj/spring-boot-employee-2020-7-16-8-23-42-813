@@ -19,11 +19,6 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-//    @GetMapping
-//    public List<Company> findAllCompanies() {
-//        return companyService.findAllCompanies();
-//    }
-
     @PostMapping
     public void addCompany(@RequestBody Company company) {
         companyService.addCompany(company);

@@ -29,9 +29,10 @@ public class EmployeeController {
         return employeeService.findEmployeeById(employeeId);
     }
 
-    @PutMapping
-    public void updateEmployee(@RequestBody Employee employee) {
-        employeeService.updateEmployee(employee);
+    @PutMapping("/{employeeId}")
+    public void updateEmployee(@PathVariable("employeeId") int employeeId,
+                               @RequestBody Employee employee) {
+        employeeService.updateEmployee(employeeId, employee);
     }
 
     @DeleteMapping("/{employeeId}")
@@ -41,8 +42,8 @@ public class EmployeeController {
 
     @GetMapping
     public List<Employee> findEmployees(@RequestParam(value = "page", required = false) Integer page,
-                                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                             @RequestParam(value = "gender", required = false) String gender) {
+                                        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                        @RequestParam(value = "gender", required = false) String gender) {
         if (!StringUtils.isEmpty(gender)) {
             return employeeService.findEmployeeByGender(gender);
         }

@@ -32,9 +32,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(int employeeId, Employee employee) {
         for (int index = 0; index < employees.size(); index++) {
-            if (employees.get(index).getId() == employee.getId()) {
+            if (employees.get(index).getId() == employeeId) {
                 employees.set(index, employee);
                 break;
             }
@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findEmployeeByPage(int page, int pageSize) {
         List<Employee> employeeResult = new ArrayList<>();
-        if(employees.size() < (page - 1) * pageSize){
+        if (employees.size() < (page - 1) * pageSize) {
             return employeeResult;
         }
         int startIndex = (page - 1) * pageSize;

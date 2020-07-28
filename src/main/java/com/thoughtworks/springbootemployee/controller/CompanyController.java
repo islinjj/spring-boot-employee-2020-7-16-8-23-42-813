@@ -33,5 +33,10 @@ public class CompanyController {
     public List<Employee> findAllEmployeesByCompanyId(int companyId) {
         return companyService.findEmployeesByCompanyId(companyId);
     }
-    
+
+    @GetMapping
+    public List<Company> findAllCompaniesByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        return companyService.getCompaniesByPage(page, pageSize);
+    }
+
 }

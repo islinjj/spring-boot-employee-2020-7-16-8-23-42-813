@@ -59,9 +59,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void updateCompany(Company company) {
+    public void updateCompany(int companyId, Company company) {
         for (int index = 0; index < companies.size(); index++) {
-            if (companies.get(index).getId() == company.getId()) {
+            if (companies.get(index).getId() == companyId) {
                 companies.set(index, company);
                 break;
             }

@@ -41,7 +41,7 @@ public class CompanyController {
 
     @GetMapping
     public List<Company> findCompanies(@RequestParam(value = "page", required = false) Integer page,
-                                                @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+                                       @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         if (page != null && pageSize != null) {
             return companyService.getCompaniesByPage(page, pageSize);
         }
@@ -49,8 +49,9 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyId}")
-    public void updateCompany(@RequestBody Company company) {
-        companyService.updateCompany(company);
+    public void updateCompany(@PathVariable("companyId") int companyId,
+                              @RequestBody Company company) {
+        companyService.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{companyId}")

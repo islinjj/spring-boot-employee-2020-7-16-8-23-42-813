@@ -21,7 +21,7 @@ public interface CompanyService {
 
     List<Company> getCompaniesByPage(int page, int pageSize);
 
-    void updateCompany(Company company);
+    void updateCompany(int companyId, Company company);
 
     void deleteEmployeesByCompanyId(int companyId);
 }

@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service.impl;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
  * @Date 7/28/2020 4:57 PM
  * @Version 1.0
  */
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
     List<Employee> employees = new ArrayList<>();
 
@@ -30,6 +32,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAllEmployees() {
-        return null;
+        return this.employees;
     }
 }

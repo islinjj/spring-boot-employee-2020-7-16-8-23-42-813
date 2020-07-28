@@ -38,7 +38,7 @@ public class CompanyController {
     public List<Company> findCompanies(@RequestParam(value = "page", required = false) Integer page,
                                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         if (page != null && pageSize != null) {
-            return companyService.getCompaniesByPage(page, pageSize);
+            return companyService.findCompaniesByPage(page, pageSize);
         }
         return companyService.findAllCompanies();
     }

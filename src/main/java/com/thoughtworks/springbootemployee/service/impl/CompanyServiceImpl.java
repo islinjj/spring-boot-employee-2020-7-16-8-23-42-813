@@ -48,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Company> getCompaniesByPage(int page, int pageSize) {
+    public List<Company> findCompaniesByPage(int page, int pageSize) {
         return PageHelper.findByPage(page, pageSize, companies);
     }
 

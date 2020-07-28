@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author ZHUDO2
@@ -51,5 +52,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findAllEmployees() {
         return this.employees;
+    }
+
+    @Override
+    public List<Employee> findEmployeeByGender(String employeeGender) {
+        if (StringUtils.isEmpty(employeeGender)) {
+            return null;
+        }
+        return employees.stream()
+                .filter(employee -> employeeGender.equals(employee.getGender()))
+                .collect(Collectors.toList());
     }
 }

@@ -19,4 +19,7 @@ public interface EmployeeService {
     Employee findEmployeeById(int employeeId);
 
     List<Employee> findAllEmployees();
+
+    List<Employee> findEmployeeByGender(String employeeGender);
+
 }

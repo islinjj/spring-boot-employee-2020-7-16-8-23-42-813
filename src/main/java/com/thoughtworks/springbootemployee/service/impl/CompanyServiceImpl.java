@@ -49,7 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> getCompaniesByPage(int page, int pageSize) {
         List<Company> result = new ArrayList<>();
-        if(companies.size() < (page - 1) * pageSize){
+        if (companies.size() < (page - 1) * pageSize) {
             return result;
         }
         int startIndex = (page - 1) * pageSize;
@@ -70,9 +70,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void deleteEmployeesByCompanyId(int companyId) {
-        companies.remove(companies.stream()
-                .filter(employee -> employee.getId() == companyId)
-                .findFirst()
-                .orElse(null));
+        for (int index = 0; index < companies.size(); index++) {
+            Company company = companies.get(index);
+            if (company.getId() == companyId) {
+                company.setEmployees(new ArrayList<>());
+                break;
+            }
+        }
     }
 }

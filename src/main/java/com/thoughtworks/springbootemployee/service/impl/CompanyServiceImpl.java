@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service.impl;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.utils.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -48,14 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Company> getCompaniesByPage(int page, int pageSize) {
-        List<Company> result = new ArrayList<>();
-        if (companies.size() < (page - 1) * pageSize) {
-            return result;
-        }
-        int startIndex = (page - 1) * pageSize;
-        int endIndex = page * pageSize - 1;
-        result = companies.stream().skip(startIndex).limit(endIndex).collect(Collectors.toList());
-        return result;
+        return PageHelper.findByPage(page, pageSize, companies);
     }
 
     @Override

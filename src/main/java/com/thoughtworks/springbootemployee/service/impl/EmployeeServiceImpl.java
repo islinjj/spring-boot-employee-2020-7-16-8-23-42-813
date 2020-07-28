@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service.impl;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import com.thoughtworks.springbootemployee.utils.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -66,13 +67,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmployeeByPage(int page, int pageSize) {
-        List<Employee> employeeResult = new ArrayList<>();
-        if (employees.size() < (page - 1) * pageSize) {
-            return employeeResult;
-        }
-        int startIndex = (page - 1) * pageSize;
-        int endIndex = page * pageSize - 1;
-        employeeResult = employees.stream().skip(startIndex).limit(endIndex).collect(Collectors.toList());
-        return employeeResult;
+        return PageHelper.findByPage(page, pageSize, employees);
     }
 }

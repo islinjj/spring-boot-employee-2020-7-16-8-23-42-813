@@ -12,10 +12,16 @@ import java.util.List;
  */
 public interface CompanyService {
     List<Company> findAllCompanies();
+
     Company findCompanyById(int companyId);
+
     List<Employee> findEmployeesByCompanyId(int companyId);
+
     void addCompany(Company company);
+
     List<Company> getCompaniesByPage();
+
     void updateCompany(Company company);
+
     void deleteEmployeesByCompanyId(int companyId);
 }

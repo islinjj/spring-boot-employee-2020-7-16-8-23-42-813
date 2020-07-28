@@ -4,9 +4,11 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author ZHUDO2
@@ -29,7 +31,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Employee> findEmployeesByCompanyId(int companyId) {
-        return null;
+        if (StringUtils.isEmpty(companyId)) {
+            return null;
+        }
+        return Objects.requireNonNull(this.companies.stream()
+                .filter(company -> companyId == company.getId())
+                .findFirst()
+                .orElse(null)).getEmployees();
     }
 
     @Override

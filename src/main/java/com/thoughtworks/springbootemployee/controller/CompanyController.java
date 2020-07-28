@@ -19,10 +19,10 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @GetMapping
-    public List<Company> findAllCompanies() {
-        return companyService.findAllCompanies();
-    }
+//    @GetMapping
+//    public List<Company> findAllCompanies() {
+//        return companyService.findAllCompanies();
+//    }
 
     @PostMapping
     public void addCompany(@RequestBody Company company) {
@@ -39,10 +39,14 @@ public class CompanyController {
         return companyService.findCompanyById(companyId);
     }
 
-//    @GetMapping
-//    public List<Company> findAllCompaniesByPage(@RequestParam("page")int page, @RequestParam("pageSize") int pageSize) {
-//        return companyService.getCompaniesByPage(page, pageSize);
-//    }
+    @GetMapping
+    public List<Company> findCompanies(@RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        if (page != null && pageSize != null) {
+            return companyService.getCompaniesByPage(page, pageSize);
+        }
+        return companyService.findAllCompanies();
+    }
 
     @PutMapping("/{companyId}")
     public void updateCompany(@RequestBody Company company) {

@@ -30,18 +30,29 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> findAllEmployeesByCompanyId(int companyId) {
+    public List<Employee> findAllEmployeesByCompanyId(@PathVariable("companyId") int companyId) {
         return companyService.findEmployeesByCompanyId(companyId);
     }
 
-    @GetMapping
-    public List<Company> findAllCompaniesByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return companyService.getCompaniesByPage(page, pageSize);
+    @GetMapping("/{companyId}")
+    public Company findCompanyById(@PathVariable("companyId") int companyId) {
+        return companyService.findCompanyById(companyId);
     }
+
+//    @GetMapping
+//    public List<Company> findAllCompaniesByPage(@RequestParam("page")int page, @RequestParam("pageSize") int pageSize) {
+//        return companyService.getCompaniesByPage(page, pageSize);
+//    }
 
     @PutMapping
     public void updateCompany(@RequestBody Company company) {
         companyService.updateCompany(company);
     }
+
+    @DeleteMapping("/{companyId}")
+    public void deleteEmployeesByCompanyId(@PathVariable("companyId") int companyId) {
+        companyService.deleteEmployeesByCompanyId(companyId);
+    }
+
 
 }

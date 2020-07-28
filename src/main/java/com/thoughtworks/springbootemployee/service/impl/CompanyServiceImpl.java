@@ -34,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void addCompany(Company company) {
-
+        companies.add(company);
     }
 
     @Override

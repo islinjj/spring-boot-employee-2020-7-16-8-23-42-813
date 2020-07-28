@@ -70,6 +70,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void deleteEmployeesByCompanyId(int companyId) {
-
+        companies.remove(companies.stream()
+                .filter(employee -> employee.getId() == companyId)
+                .findFirst()
+                .orElse(null));
     }
 }

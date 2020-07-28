@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeById(@PathVariable("employeeId") int employeeId) {
+    public Employee findEmployeeById(@PathVariable("employeeId") int employeeId) {
         return employeeService.findEmployeeById(employeeId);
     }
 

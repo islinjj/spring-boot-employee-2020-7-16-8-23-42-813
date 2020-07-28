@@ -43,7 +43,7 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(employeeId);
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Employee> findEmployeeByGender(@RequestParam("gender") String gender) {
         return employeeService.findEmployeeByGender(gender);
     }

@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,6 @@ public class EmployeeController {
         employeeService.addEmployee(employee);
     }
 
-    @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.findAllEmployees();
-    }
-
     @GetMapping("/{employeeId}")
     public Employee getEmployeeById(@PathVariable("employeeId") int employeeId) {
         return employeeService.findEmployeeById(employeeId);
@@ -44,12 +40,15 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> findEmployeeByGender(@RequestParam("gender") String gender) {
-        return employeeService.findEmployeeByGender(gender);
-    }
-
-    @GetMapping
-    public List<Employee> findEmployeeByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return employeeService.findEmployeeByPage(page, pageSize);
+    public List<Employee> findEmployees(@RequestParam(value = "page", required = false) Integer page,
+                                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                             @RequestParam(value = "gender", required = false) String gender) {
+        if (!StringUtils.isEmpty(gender)) {
+            return employeeService.findEmployeeByGender(gender);
+        }
+        if (page != null && pageSize != null) {
+            return employeeService.findEmployeeByPage(page, pageSize);
+        }
+        return employeeService.findAllEmployees();
     }
 }

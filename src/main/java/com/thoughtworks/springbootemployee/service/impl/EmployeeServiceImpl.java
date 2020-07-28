@@ -63,4 +63,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(employee -> employeeGender.equals(employee.getGender()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Employee> findEmployeeByPage(int page, int pageSize) {
+        List<Employee> employeeResult = new ArrayList<>();
+        if(employees.size() < (page - 1) * pageSize){
+            return employeeResult;
+        }
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = page * pageSize - 1;
+        for(int index = startIndex ; index < endIndex;index ++){
+            employeeResult.add(employees.get(index));
+        }
+        return employeeResult;
+    }
 }

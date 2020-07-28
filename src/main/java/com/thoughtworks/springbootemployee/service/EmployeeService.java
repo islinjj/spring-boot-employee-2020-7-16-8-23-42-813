@@ -22,4 +22,5 @@ public interface EmployeeService {
 
     List<Employee> findEmployeeByGender(String employeeGender);
 
+    List<Employee> findEmployeeByPage(int page,int pageSize);
 }

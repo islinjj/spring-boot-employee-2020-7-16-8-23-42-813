@@ -23,8 +23,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public void deleteEmployeeById(int employeeId) {
+        employees.remove(employees.stream()
+                .filter(employee -> employee.getId() == employeeId)
+                .findFirst()
+                .orElse(null));
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        for (int index = 0; index < employees.size(); index++) {
+            if (employees.get(index).getId() == employee.getId()) {
+                employees.set(index, employee);
+                break;
+            }
+        }
+    }
+
+    @Override
     public Employee findEmployeeById(int employeeId) {
-        if(StringUtils.isEmpty(employeeId)){
+        if (StringUtils.isEmpty(employeeId)) {
             return null;
         }
         return this.employees.stream().filter(employee -> employeeId == employee.getId()).findFirst().orElse(null);

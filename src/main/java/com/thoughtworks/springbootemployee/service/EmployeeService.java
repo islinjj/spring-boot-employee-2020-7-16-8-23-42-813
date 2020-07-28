@@ -12,7 +12,7 @@ import java.util.List;
 public interface EmployeeService {
     void addEmployee(Employee employee);
 
-    Employee findEmployeeById(String employeeId);
+    Employee findEmployeeById(int employeeId);
 
     List<Employee> findAllEmployees();
 }

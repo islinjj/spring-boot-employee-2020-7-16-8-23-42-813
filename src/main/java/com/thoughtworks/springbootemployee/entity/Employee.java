@@ -8,7 +8,7 @@ package com.thoughtworks.springbootemployee.entity;
 public class Employee {
     private int age;
     private String name;
-    private String id;
+    private int id;
     private String gender;
 
     public int getAge() {
@@ -27,11 +27,11 @@ public class Employee {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int age, String name, String id, String gender) {
+    public Employee(int age, String name, int id, String gender) {
         this.age = age;
         this.name = name;
         this.id = id;

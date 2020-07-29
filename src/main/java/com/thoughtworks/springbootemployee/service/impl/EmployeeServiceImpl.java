@@ -1,14 +1,19 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import com.thoughtworks.springbootemployee.utils.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author ZHUDO2
@@ -19,9 +24,17 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
     List<Employee> employees = new ArrayList<>();
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+
     @Override
-    public void addEmployee(Employee employee) {
-        this.employees.add(employee);
+    public void addEmployee(EmployeeRequestDto employeeRequestDto) {
+        Employee employee = employeeRequestDto.toEntity();
+        Company targetCompany = companyRepository.findAll().stream().filter(company -> company.getId() == employeeRequestDto.getCompanyId()).findFirst().get();
+        employee.setCompany(targetCompany);
+        employeeRepository.save(employee);
     }
 
     @Override

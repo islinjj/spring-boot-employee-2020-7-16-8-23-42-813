@@ -51,7 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmployeeByGender(String employeeGender) {
-        return new ArrayList<>();
+        List<Employee> employees = employeeRespository.findAll();
+        return employees.stream().filter(employee -> employee.getGender().equals(employeeGender)).collect(Collectors.toList());
     }
 
     @Override

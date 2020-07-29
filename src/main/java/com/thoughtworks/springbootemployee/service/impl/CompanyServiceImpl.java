@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author ZHUDO2
@@ -19,11 +20,11 @@ import java.util.List;
  */
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    public CompanyServiceImpl(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public List<Company> findAllCompanies(Pageable pageable) {
@@ -37,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Employee> findEmployeesByCompanyId(int companyId) {
-        return companyRepository.findById(companyId).orElse(null).getEmployees();
+        return Objects.requireNonNull(companyRepository.findById(companyId).orElse(null)).getEmployees();
     }
 
     @Override

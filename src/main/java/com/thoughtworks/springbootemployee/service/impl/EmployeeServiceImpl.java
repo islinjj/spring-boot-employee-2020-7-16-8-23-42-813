@@ -22,12 +22,14 @@ import java.util.List;
  */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    List<Employee> employees = new ArrayList<>();
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
+
+    public EmployeeServiceImpl(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
+        this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public void addEmployee(EmployeeRequestDto employeeRequestDto) {

@@ -18,8 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @PostMapping
     public void addCompany(@RequestBody Company company) {

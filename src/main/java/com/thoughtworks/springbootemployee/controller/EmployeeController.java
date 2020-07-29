@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -18,8 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @PostMapping
     public void addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
@@ -49,7 +53,7 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public Page<Employee> findAllEmployees(@PageableDefault Pageable pageable, @RequestParam (defaultValue = "false") boolean unpaged) {
+    public Page<Employee> findAllEmployees(@PageableDefault Pageable pageable, @RequestParam(defaultValue = "false") boolean unpaged) {
         if (unpaged) {
             pageable = Pageable.unpaged();
         }

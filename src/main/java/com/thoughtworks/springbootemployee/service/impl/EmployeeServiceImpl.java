@@ -46,13 +46,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(int employeeId, Employee employee) {
-        for (int index = 0; index < employees.size(); index++) {
-            if (employees.get(index).getId() == employeeId) {
-                employees.set(index, employee);
-                break;
-            }
-        }
+    public void updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
+        Employee employee = employeeRequestDto.toEntity();
+        employee.setId(employeeId);
+        Company company = companyRepository.findById(employeeRequestDto.getCompanyId()).orElse(null);
+        employee.setCompany(company);
+        employeeRepository.save(employee);
     }
 
     @Override

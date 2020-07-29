@@ -20,6 +20,7 @@ public class Employee {
     private String gender;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     private Company company;
 

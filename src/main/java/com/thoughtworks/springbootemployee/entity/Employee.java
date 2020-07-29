@@ -67,4 +67,9 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(int age, String name, String gender) {
+        this.age = age;
+        this.name = name;
+        this.gender = gender;
+    }
 }

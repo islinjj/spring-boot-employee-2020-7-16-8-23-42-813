@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    List<Company> companies = new ArrayList<Company>();
+    List<Company> companies = new Vector<>();
 
     @Override
     public List<Company> findAllCompanies() {
@@ -33,13 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Employee> findEmployeesByCompanyId(int companyId) {
-        if (StringUtils.isEmpty(companyId)) {
-            return null;
-        }
-        return Objects.requireNonNull(this.companies.stream()
-                .filter(company -> companyId == company.getId())
-                .findFirst()
-                .orElse(null)).getEmployees();
+        return findCompanyById(companyId).getEmployees();
     }
 
     @Override

@@ -6,8 +6,8 @@ import com.thoughtworks.springbootemployee.utils.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    List<Employee> employees = new ArrayList<>();
+    List<Employee> employees = new Vector<>();
 
     @Override
     public void addEmployee(Employee employee) {
@@ -26,10 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployeeById(int employeeId) {
-        employees.remove(employees.stream()
-                .filter(employee -> employee.getId() == employeeId)
-                .findFirst()
-                .orElse(null));
+        employees.remove(findEmployeeById(employeeId));
     }
 
     @Override
@@ -44,9 +41,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployeeById(int employeeId) {
-        if (StringUtils.isEmpty(employeeId)) {
-            return null;
-        }
         return this.employees.stream().filter(employee -> employeeId == employee.getId()).findFirst().orElse(null);
     }
 

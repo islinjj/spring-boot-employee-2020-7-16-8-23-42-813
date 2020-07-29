@@ -26,8 +26,8 @@ public class CompanyServiceImpl implements CompanyService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Company> findAllCompanies() {
-        return companies;
+    public List<Company> findAllCompanies(Pageable pageable) {
+        return companyRepository.findAll(pageable).toList();
     }
 
     @Override

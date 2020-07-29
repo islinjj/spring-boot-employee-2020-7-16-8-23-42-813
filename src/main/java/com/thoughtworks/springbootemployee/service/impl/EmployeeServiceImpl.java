@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -55,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmployeeByPage(int page, int pageSize) {
-        return null;
+        List<Employee> employees = employeeRespository.findAll();
+        return PageHelper.findByPage(page, pageSize, employees);
     }
 }

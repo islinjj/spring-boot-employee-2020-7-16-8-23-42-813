@@ -16,7 +16,7 @@ public class PageHelper {
         }
         int startIndex = (page - 1) * pageSize;
         int endIndex = page * pageSize - 1;
-        result = list.stream().skip(startIndex).limit(endIndex).collect(Collectors.toList());
+        result = list.stream().skip(startIndex).limit(endIndex - startIndex + 1).collect(Collectors.toList());
         return result;
     }
 }

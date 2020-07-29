@@ -62,17 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmployeeByGender(String employeeGender) {
+    public List<Employee> findEmployeeByGender(String employeeGender) throws Exception {
         if (StringUtils.isEmpty(employeeGender)) {
-            return null;
+            throw new Exception();
         }
-        return employees.stream()
-                .filter(employee -> employeeGender.equals(employee.getGender()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Employee> findEmployeeByPage(int page, int pageSize) {
-        return PageHelper.findByPage(page, pageSize, employees);
+        return employeeRepository.findByGender(employeeGender);
     }
 }

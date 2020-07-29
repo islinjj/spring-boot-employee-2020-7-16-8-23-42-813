@@ -42,16 +42,17 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(employeeId);
     }
 
-    @GetMapping
-    public List<Employee> findEmployees(@RequestParam(value = "page", required = false) Integer page,
-                                        @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                        @RequestParam(value = "gender", required = false) String gender) {
-        if (!StringUtils.isEmpty(gender)) {
-            return employeeService.findEmployeeByGender(gender);
+    @GetMapping(params = {"gender"})
+    public List<Employee> findEmployeesByGender(String gender)
+            throws Exception {
+        return employeeService.findEmployeeByGender(gender);
+    }
+
+    @GetMapping()
+    public Page<Employee> findAllEmployees(@PageableDefault Pageable pageable, @RequestParam boolean unpaged) {
+        if (unpaged) {
+            pageable = Pageable.unpaged();
         }
-        if (page != null && pageSize != null) {
-            return employeeService.findEmployeeByPage(page, pageSize);
-        }
-        return employeeService.findAllEmployees();
+        return employeeService.findAllEmployees(pageable);
     }
 }

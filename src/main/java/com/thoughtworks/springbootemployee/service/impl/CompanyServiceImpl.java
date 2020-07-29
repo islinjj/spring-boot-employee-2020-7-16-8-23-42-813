@@ -7,6 +7,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,14 +67,9 @@ public class CompanyServiceImpl implements CompanyService {
         }
     }
 
+    @Modifying
     @Override
     public void deleteEmployeesByCompanyId(int companyId) {
-        for (int index = 0; index < companies.size(); index++) {
-            Company company = companies.get(index);
-            if (company.getId() == companyId) {
-                company.setEmployees(new ArrayList<>());
-                break;
-            }
-        }
+        companyRepository.deleteById(companyId);
     }
 }

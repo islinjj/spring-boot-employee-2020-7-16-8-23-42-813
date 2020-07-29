@@ -57,10 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployeeById(int employeeId) {
-        if (StringUtils.isEmpty(employeeId)) {
-            return null;
-        }
-        return this.employees.stream().filter(employee -> employeeId == employee.getId()).findFirst().orElse(null);
+        return employeeRepository.findById(employeeId).orElse(null);
     }
 
     @Override

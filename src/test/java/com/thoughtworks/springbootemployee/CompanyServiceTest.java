@@ -44,7 +44,7 @@ class CompanyServiceTest {
     void should_empty_employ_when_finding_in_company_given_error_company_id() {
         //given
         int companyId = 8;
-        Company company = initCompany();
+        Company company = new Company();
         when(companyRepository.findById(companyId)).thenReturn(Optional.of(company));
 
         //when

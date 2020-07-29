@@ -2,15 +2,15 @@ package com.thoughtworks.springbootemployee.service.impl;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import com.thoughtworks.springbootemployee.utils.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @Author ZHUDO2
@@ -19,7 +19,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    List<Company> companies = new ArrayList<Company>();
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Override
     public List<Company> findAllCompanies() {
@@ -28,7 +32,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company findCompanyById(int companyId) {
-        return companies.stream().filter(company -> company.getId() == companyId).findFirst().orElse(null);
+        return companyRepository.findById(companyId).orElse(null);
     }
 
     @Override

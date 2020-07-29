@@ -49,12 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void addCompany(Company company) {
-        companies.add(company);
-    }
-
-    @Override
-    public List<Company> findCompaniesByPage(int page, int pageSize) {
-        return PageHelper.findByPage(page, pageSize, companies);
+        companyRepository.save(company);
     }
 
     @Override

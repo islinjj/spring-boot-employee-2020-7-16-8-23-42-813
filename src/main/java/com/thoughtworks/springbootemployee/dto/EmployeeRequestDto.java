@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.dto;
 
-import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 
 /**

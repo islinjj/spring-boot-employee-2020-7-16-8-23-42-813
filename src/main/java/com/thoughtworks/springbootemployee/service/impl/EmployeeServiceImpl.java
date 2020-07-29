@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmployeeByGender(String employeeGender) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

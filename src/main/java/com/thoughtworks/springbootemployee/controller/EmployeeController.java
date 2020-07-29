@@ -49,7 +49,7 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public Page<Employee> findAllEmployees(@PageableDefault Pageable pageable, @RequestParam boolean unpaged) {
+    public Page<Employee> findAllEmployees(@PageableDefault Pageable pageable, @RequestParam (defaultValue = "false") boolean unpaged) {
         if (unpaged) {
             pageable = Pageable.unpaged();
         }

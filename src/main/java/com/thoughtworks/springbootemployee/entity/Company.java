@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,8 +8,15 @@ import java.util.List;
  * @Date 7/28/2020 7:40 PM
  * @Version 1.0
  */
+@Entity
+@Table(name = "company")
 public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "company_id")
     private int id;
+
+    @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
     public Company() {

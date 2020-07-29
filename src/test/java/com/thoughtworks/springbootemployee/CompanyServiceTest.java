@@ -41,10 +41,23 @@ class CompanyServiceTest {
     }
 
     @Test
-    void should_empty_employ_when_finding_in_company_given_error_company_id() {
+    void should_empty_employee_when_finding_in_company_given_error_company_id() {
         //given
         int companyId = 8;
         Company company = new Company();
+        when(companyRepository.findById(companyId)).thenReturn(Optional.of(company));
+
+        //when
+        List<Employee> result = companyService.findEmployeesByCompanyId(companyId);
+        Assertions.assertEquals(0, result.size());
+    }
+
+    @Test
+    void should_empty_employee_when_finding_in_company_given_company_id_and_empty_employees() {
+        //given
+        int companyId = 8;
+        Company company = new Company();
+        company.setEmployees(new ArrayList<>());
         when(companyRepository.findById(companyId)).thenReturn(Optional.of(company));
 
         //when

@@ -12,6 +12,6 @@ import java.util.List;
  * @Version 1.0
  */
 @Repository
-public interface CompanyRepository extends JpaRepository<Company,Integer> {
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 }

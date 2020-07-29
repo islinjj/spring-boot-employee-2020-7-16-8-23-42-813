@@ -38,13 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Employee> findEmployeesByCompanyId(int companyId) {
-        if (StringUtils.isEmpty(companyId)) {
-            return null;
-        }
-        return Objects.requireNonNull(this.companies.stream()
-                .filter(company -> companyId == company.getId())
-                .findFirst()
-                .orElse(null)).getEmployees();
+        return companyRepository.findById(companyId).orElse(null).getEmployees();
     }
 
     @Override

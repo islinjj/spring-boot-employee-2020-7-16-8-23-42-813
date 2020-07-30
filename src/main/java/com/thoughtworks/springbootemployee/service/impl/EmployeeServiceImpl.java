@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCompany(targetCompany);
         employeeRepository.save(employee);
         EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
-        BeanUtils.copyProperties(employee, new EmployeeResponseDto());
+        BeanUtils.copyProperties(employee, employeeResponseDto);
         return employeeResponseDto;
     }
 

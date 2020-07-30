@@ -55,7 +55,7 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_1_updated_employee_when_update_given_1_new_employee() throws Exception {
-        Employee initEmployee = new Employee(22,"vicky", "female");
+        Employee initEmployee = new Employee(22, "vicky", "female");
         initEmployee.setCompany(new Company(1, new ArrayList<>()));
         employeeRepository.save(initEmployee);
         String employeeNewJson = "{\n" +
@@ -71,5 +71,15 @@ public class EmployeeIntegrationTest {
         Assertions.assertEquals("sam", newEmployee.getName());
     }
 
-
+    @Test
+    void should_return_none_when_delete_employee_given_employee_id() throws Exception {
+        Employee initEmployee = new Employee(22, "vicky", "female");
+        initEmployee.setCompany(new Company(1, new ArrayList<>()));
+        employeeRepository.save(initEmployee);
+        List<Employee> employees = employeeRepository.findAll();
+        Employee selectedEmployee = employees.stream().filter(employee -> employee.getName().equals("vicky")).findFirst().orElse(null);
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/employees/%d", selectedEmployee.getId())));
+        employees = employeeRepository.findAll();
+        Assertions.assertEquals(0, employees.size());
+    }
 }

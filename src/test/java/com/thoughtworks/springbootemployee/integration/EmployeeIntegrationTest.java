@@ -54,16 +54,22 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    void should_return_1_employee_when_add_given_1_employee() throws Exception {
-        String employeeJson = "{\n" +
+    void should_return_1_updated_employee_when_update_given_1_new_employee() throws Exception {
+        Employee initEmployee = new Employee(22,"vicky", "female");
+        initEmployee.setCompany(new Company(1, new ArrayList<>()));
+        employeeRepository.save(initEmployee);
+        String employeeNewJson = "{\n" +
                 "    \"age\": 22,\n" +
                 "    \"name\": \"sam\",\n" +
                 "    \"gender\": \"male\",\n" +
                 "    \"companyId\" :1\n" +
                 "}";
-        mockMvc.perform(MockMvcRequestBuilders.post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeJson));
-        Employee employee = employeeRepository.findById(1).orElse(null);
-
-        Assertions.assertEquals(employee.getName(), "sam");
+        List<Employee> employees = employeeRepository.findAll();
+        Employee selectedEmployee = employees.stream().filter(employee -> employee.getName().equals("vicky")).findFirst().orElse(null);
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/employees/%d", selectedEmployee.getId())).contentType(MediaType.APPLICATION_JSON).content(employeeNewJson));
+        Employee newEmployee = employeeRepository.findAll().get(0);
+        Assertions.assertEquals("sam", newEmployee.getName());
     }
+
+
 }

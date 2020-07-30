@@ -99,4 +99,18 @@ public class EmployeeIntegrationTest {
         List<Employee> employees = JSONArray.parseArray(jsonObject.get("content").toString(), Employee.class);
         Assertions.assertEquals(3, employees.size());
     }
+
+    @Test
+    void should_return_empty_when_find_by_page_given_page_2_and_size_4() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            Employee initEmployee = new Employee(22, "vicky", "female");
+            initEmployee.setCompany(new Company(1, new ArrayList<>()));
+            employeeRepository.save(initEmployee);
+        }
+
+        MvcResult result =  mockMvc.perform(MockMvcRequestBuilders.get("/employees?page=1&size=5")).andReturn();
+        JSONObject jsonObject = JSONObject.parseObject(result.getResponse().getContentAsString());
+        List<Employee> employees = JSONArray.parseArray(jsonObject.get("content").toString(), Employee.class);
+        Assertions.assertEquals(0, employees.size());
+    }
 }

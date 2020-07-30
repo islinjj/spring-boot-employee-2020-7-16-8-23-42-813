@@ -1,6 +1,9 @@
 package com.thoughtworks.springbootemployee.dto;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author ZHUDO2
@@ -8,9 +11,13 @@ import com.thoughtworks.springbootemployee.entity.Employee;
  * @Version 1.0
  */
 public class EmployeeRequestDto {
+    @NotNull
     private int age;
+    @NotNull
     private String name;
+    @NotNull
     private String gender;
+    @NotNull
     private int companyId;
 
     public int getAge() {

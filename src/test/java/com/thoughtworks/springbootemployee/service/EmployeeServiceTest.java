@@ -40,10 +40,8 @@ class EmployeeServiceTest {
     void should_return_employee_response_dto_when_add_1_employee_given_1_employee_request_dto() {
         //given
         EmployeeRequestDto employeeRequestDto = new EmployeeRequestDto(22, "Vicky", "female", 1);
-        Employee employee = new Employee(22, "Vicky", "female");
 
         Company company = new Company(1, new ArrayList<>(), "OOCL");
-        List<Company> companies =new ArrayList<>();
         when(companyRepository.findById(company.getId())).thenReturn(Optional.of(company));
         //when
         EmployeeResponseDto result = employeeService.addEmployee(employeeRequestDto);

@@ -1,11 +1,13 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,11 +34,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void addEmployee(EmployeeRequestDto employeeRequestDto) {
+    public EmployeeResponseDto addEmployee(EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRequestDto.toEntity();
-        Company targetCompany = companyRepository.findAll().stream().filter(company -> company.getId() == employeeRequestDto.getCompanyId()).findFirst().get();
+        Company targetCompany = companyRepository.findById(employeeRequestDto.getCompanyId()).orElse(null);
         employee.setCompany(targetCompany);
         employeeRepository.save(employee);
+        EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+        BeanUtils.copyProperties(employee, new EmployeeResponseDto());
+        return employeeResponseDto;
     }
 
     @Override

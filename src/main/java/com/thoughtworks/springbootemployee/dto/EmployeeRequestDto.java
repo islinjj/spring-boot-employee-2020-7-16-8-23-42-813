@@ -45,6 +45,13 @@ public class EmployeeRequestDto {
         this.companyId = companyId;
     }
 
+    public EmployeeRequestDto(int age, String name, String gender, int companyId) {
+        this.age = age;
+        this.name = name;
+        this.gender = gender;
+        this.companyId = companyId;
+    }
+
     public Employee toEntity() {
         return new Employee(age,name,gender);
     }

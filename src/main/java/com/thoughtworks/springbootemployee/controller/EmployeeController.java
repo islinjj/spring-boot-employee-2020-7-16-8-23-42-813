@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponseDto;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public void addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
-        employeeService.addEmployee(employeeRequestDto);
+    public EmployeeResponseDto addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
+        return employeeService.addEmployee(employeeRequestDto);
     }
 
     @GetMapping("/{employeeId}")

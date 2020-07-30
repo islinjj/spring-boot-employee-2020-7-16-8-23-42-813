@@ -19,6 +19,8 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
+    private String name;
+
     public Company() {
     }
 
@@ -32,6 +34,25 @@ public class Company {
 
     public List<Employee> getEmployees() {
         return employees;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Company(int id, List<Employee> employees) {
+        this.id = id;
+        this.employees = employees;
+    }
+
+    public Company(int id, List<Employee> employees, String name) {
+        this.id = id;
+        this.employees = employees;
+        this.name = name;
     }
 
     public void setEmployees(List<Employee> employees) {

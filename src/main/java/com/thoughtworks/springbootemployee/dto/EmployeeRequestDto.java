@@ -41,6 +41,9 @@ public class EmployeeRequestDto {
         return companyId;
     }
 
+    public EmployeeRequestDto() {
+    }
+
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }

@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.integration;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -81,5 +84,19 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/employees/%d", selectedEmployee.getId())));
         employees = employeeRepository.findAll();
         Assertions.assertEquals(0, employees.size());
+    }
+
+    @Test
+    void should_return_3_employee_when_find_by_page_given_page_1_and_size_3() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            Employee initEmployee = new Employee(22, "vicky", "female");
+            initEmployee.setCompany(new Company(1, new ArrayList<>()));
+            employeeRepository.save(initEmployee);
+        }
+
+        MvcResult result =  mockMvc.perform(MockMvcRequestBuilders.get("/employees?page=0&size=3")).andReturn();
+        JSONObject jsonObject = JSONObject.parseObject(result.getResponse().getContentAsString());
+        List<Employee> employees = JSONArray.parseArray(jsonObject.get("content").toString(), Employee.class);
+        Assertions.assertEquals(3, employees.size());
     }
 }

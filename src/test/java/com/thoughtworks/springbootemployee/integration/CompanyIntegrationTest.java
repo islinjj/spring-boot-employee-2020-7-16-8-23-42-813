@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.integration;
 
+import com.alibaba.fastjson.JSONArray;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
@@ -25,16 +28,20 @@ public class CompanyIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @BeforeEach
-    void clearDataBase () {
+    void clearDataBase() {
         companyRepository.deleteAll();
     }
+
     @Test
     void should_return_1_company_when_add_company_given_1_company_request_dto() throws Exception {
         String companyRequestDtoJson = "{ \"name\" : \"oocl\"}";
         mockMvc.perform(MockMvcRequestBuilders.post("/companies").contentType(MediaType.APPLICATION_JSON).content(companyRequestDtoJson));
         Company company = companyRepository.findAll().get(0);
-        Assertions.assertEquals("oocl",company.getName());
+        Assertions.assertEquals("oocl", company.getName());
     }
 
     @Test
@@ -45,7 +52,7 @@ public class CompanyIntegrationTest {
         String newCompanyRequestDtoJson = "{ \"name\" : \"tw\"}";
         mockMvc.perform(MockMvcRequestBuilders.put("/companies/" + company.getId()).contentType(MediaType.APPLICATION_JSON).content(newCompanyRequestDtoJson));
         Company newCompany = companyRepository.findAll().get(0);
-        Assertions.assertEquals("tw",newCompany.getName());
+        Assertions.assertEquals("tw", newCompany.getName());
     }
 
     @Test
@@ -60,4 +67,13 @@ public class CompanyIntegrationTest {
         Assertions.assertEquals(0, companies.size());
     }
 
+    @Test
+    void should_return_1_company_when_find_company_by_page_given_page_0_and_size_1() throws Exception {
+        Company company = new Company();
+        company.setName("oocl");
+        companyRepository.save(company);
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/companies?page=0&size=1")).andReturn();
+        List<Company> companies = JSONArray.parseArray(mvcResult.getResponse().getContentAsString(), Company.class);
+        Assertions.assertEquals(1, companies.size());
+    }
 }

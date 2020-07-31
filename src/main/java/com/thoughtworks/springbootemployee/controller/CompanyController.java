@@ -1,9 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.CompanyRequestDto;
+import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class CompanyController {
     }
 
     @PostMapping
-    public void addCompany(@RequestBody Company company) {
-        companyService.addCompany(company);
+    public CompanyResponseDto addCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+        return companyService.addCompany(companyRequestDto.toEntity());
     }
 
     @GetMapping("/{companyId}/employees")

@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyRequestDto;
+import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,7 @@ public interface CompanyService {
 
     List<Employee> findEmployeesByCompanyId(int companyId);
 
-    void addCompany(Company company);
+    CompanyResponseDto addCompany(Company company);
 
     void updateCompany(int companyId, Company company);
 

@@ -1,11 +1,12 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
+import com.thoughtworks.springbootemployee.dto.CompanyRequestDto;
+import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addCompany(Company company) {
-        companyRepository.save(company);
+    public CompanyResponseDto addCompany(Company company) {
+        Company result = companyRepository.save(company);
+        CompanyResponseDto companyResponseDto = new CompanyResponseDto();
+        BeanUtils.copyProperties(result,companyResponseDto);
+        return companyResponseDto;
     }
 
     @Override

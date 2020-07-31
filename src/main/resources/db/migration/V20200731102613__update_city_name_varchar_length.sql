@@ -1,0 +1,1 @@
+alter table city alter name varchar(50)

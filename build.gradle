@@ -28,7 +28,7 @@ dependencies {
     compile 'com.h2database:h2'
     compile 'com.alibaba:fastjson:1.2.5'
     implementation('org.springframework.boot:spring-boot-starter-validation')
-    classpath(group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: "4.0.3")
+    implementation('org.flywaydb:flyway-core')
 }
 
 group = 'com.thoughtworks'

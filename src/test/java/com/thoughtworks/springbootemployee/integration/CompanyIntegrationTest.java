@@ -33,4 +33,15 @@ public class CompanyIntegrationTest {
         Company company = companyRepository.findAll().get(0);
         Assertions.assertEquals("oocl",company.getName());
     }
+
+    @Test
+    void should_return_updated_company_when_update_company_given_new_company_request_dto() throws Exception {
+        Company company = new Company();
+        company.setName("oocl");
+        companyRepository.save(company);
+        String newCompanyRequestDtoJson = "{ \"name\" : \"tw\"}";
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/" + company.getId()).contentType(MediaType.APPLICATION_JSON).content(newCompanyRequestDtoJson));
+        Company newCompany = companyRepository.findAll().get(0);
+        Assertions.assertEquals("tw",newCompany.getName());
+    }
 }

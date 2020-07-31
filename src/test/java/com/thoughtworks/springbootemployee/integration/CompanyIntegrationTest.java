@@ -12,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyIntegrationTest {
@@ -44,4 +47,17 @@ public class CompanyIntegrationTest {
         Company newCompany = companyRepository.findAll().get(0);
         Assertions.assertEquals("tw",newCompany.getName());
     }
+
+    @Test
+    void should_return_none_when_delete_company_given_company_id() throws Exception {
+        Company company = new Company();
+        company.setName("oocl");
+        companyRepository.save(company);
+        List<Company> companies = companyRepository.findAll();
+        Company selectedCompany = companies.stream().filter(item -> item.getName().equals("oocl")).findFirst().orElse(null);
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/companies/%d", selectedCompany.getId())));
+        companies = companyRepository.findAll();
+        Assertions.assertEquals(0, companies.size());
+    }
+
 }

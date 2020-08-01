@@ -81,18 +81,18 @@ class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_company_id_1_company() {
+    void should_return_updated_company_response_dto_when_update_company_given_company_id_1_company() {
         //given
         Integer companyId = 1;
         Company company = new Company(1,new ArrayList<>(),"oocl");
-        companyRepository.save(company);
-        company = new Company(1,new ArrayList<>(),"tw");
+        when(companyRepository.save(company)).thenReturn(company);
+        company.setName("tw");
 
         //when
-        companyService.updateCompany(companyId,company);
+        CompanyResponseDto companyResponseDto = companyService.updateCompany(companyId,company);
 
         //then
-        verify(companyRepository).save(company);
+        Assertions.assertEquals("tw",companyResponseDto.getName());
     }
 
     @Test

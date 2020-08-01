@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -26,9 +27,6 @@ import static org.mockito.Mockito.when;
 class EmployeeServiceTest {
     @InjectMocks
     EmployeeServiceImpl employeeService;
-
-    @InjectMocks
-    CompanyServiceImpl companyService;
 
     @Mock
     EmployeeRepository employeeRepository;
@@ -48,5 +46,17 @@ class EmployeeServiceTest {
 
         //then
         Assertions.assertEquals(employeeRequestDto.getName(), result.getName());
+    }
+
+    @Test
+    void should_return_empty_employees_when_delete_given_1_employee_id() {
+        //given
+        int employeeId = 1;
+
+        //when
+        employeeService.deleteEmployeeById(employeeId);
+
+        //then
+        verify(employeeRepository).deleteById(employeeId);
     }
 }

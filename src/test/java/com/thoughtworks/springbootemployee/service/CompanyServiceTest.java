@@ -51,7 +51,7 @@ class CompanyServiceTest {
 
         //when
         List<Employee> result = companyService.findEmployeesByCompanyId(companyId);
-        Assertions.assertEquals(0, result.size());
+        Assertions.assertNull(result);
     }
 
     @Test

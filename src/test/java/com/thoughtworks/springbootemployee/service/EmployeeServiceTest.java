@@ -6,7 +6,6 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import com.thoughtworks.springbootemployee.service.impl.CompanyServiceImpl;
 import com.thoughtworks.springbootemployee.service.impl.EmployeeServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -127,5 +126,21 @@ class EmployeeServiceTest {
 
         //then
         Assertions.assertEquals(1,employeeByPage.getTotalElements());
+    }
+
+    @Test
+    void should_return_male_employee_when_find_employee_given_gender_male() throws Exception {
+        //given
+        String gender = "male";
+        Employee employee = new Employee(22,"sam","male");
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee);
+        when(employeeRepository.findByGender(gender)).thenReturn(employees);
+
+        //when
+        List<Employee> employeesByGender = employeeService.findEmployeeByGender(gender);
+
+        //then
+        Assertions.assertEquals(employees,employeesByGender);
     }
 }

@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.alibaba.fastjson.JSONArray;
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -75,5 +76,19 @@ public class CompanyIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/companies?page=0&size=1")).andReturn();
         List<Company> companies = JSONArray.parseArray(mvcResult.getResponse().getContentAsString(), Company.class);
         Assertions.assertEquals(1, companies.size());
+    }
+
+    @Test
+    void should_return_1_employee_when_finding_in_company_given_company_id() throws Exception {
+        Company company = new Company("oocl");
+        companyRepository.save(company);
+        Company selectedCompany = companyRepository.findAll().get(0);
+        Employee employee = new Employee(22, "sam", "female");
+        employee.setCompany(selectedCompany);
+        employeeRepository.save(employee);
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(String.format("/companies/%d/employees", selectedCompany.getId()))).andReturn();
+        List<Employee> employees = JSONArray.parseArray(result.getResponse().getContentAsString(), Employee.class);
+
+        Assertions.assertEquals(1, employees.size());
     }
 }

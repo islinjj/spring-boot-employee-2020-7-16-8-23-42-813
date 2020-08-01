@@ -59,4 +59,25 @@ class EmployeeServiceTest {
         //then
         verify(employeeRepository).deleteById(employeeId);
     }
+
+    @Test
+    void should_return_new_employee_when_update_given_employee_id_and_employee_request_dto() {
+        //given
+        Integer employeeId = 1;
+        Employee employee = new Employee(22, "vicky", "female");
+        employee.setId(employeeId);
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+        employee.setAge(18);//remove
+        when(employeeRepository.save(employee)).thenReturn(employee);//remove,should not mock save? but will error with employee null
+        EmployeeRequestDto newEmployeeRequestDto = new EmployeeRequestDto(18,"vicky","female",1);
+
+        //when
+        EmployeeResponseDto employeeResponseDto = employeeService.updateEmployee(employeeId,newEmployeeRequestDto);
+
+        //then
+        Assertions.assertEquals(18,employeeResponseDto.getAge());
+    }
+
+
+
 }

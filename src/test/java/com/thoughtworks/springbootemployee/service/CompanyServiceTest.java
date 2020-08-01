@@ -95,6 +95,18 @@ class CompanyServiceTest {
         verify(companyRepository).save(company);
     }
 
+    @Test
+    void should_return_void_employees_when_delete_company_given_company_id() {
+        //given
+        Integer companyId = 1;
+
+        //when
+        companyService.deleteEmployeesByCompanyId(companyId);
+
+        //then
+        verify(companyRepository).deleteById(companyId);
+    }
+
     public Company initCompany() {
         List<Employee> employees = new ArrayList<>();
         for (int i = 0; i < 2; i++) {

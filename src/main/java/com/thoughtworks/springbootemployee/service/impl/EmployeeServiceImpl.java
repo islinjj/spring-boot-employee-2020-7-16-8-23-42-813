@@ -7,6 +7,7 @@ import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import com.thoughtworks.springbootemployee.utils.RelationMapperUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,8 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCompany(targetCompany);
         employeeRepository.save(employee);
         EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
-        BeanUtils.copyProperties(employee, employeeResponseDto);
-        return employeeResponseDto;
+        return RelationMapperUtils.enAndDtoMapper(employeeResponseDto, employee);
     }
 
     @Override
@@ -50,12 +50,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponseDto updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRepository.findById(employeeId).get();
-        if (employee != null){
-            BeanUtils.copyProperties(employeeRequestDto,employee);
+        if (employee != null) {
+            BeanUtils.copyProperties(employeeRequestDto, employee);
             EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
             employee = this.employeeRepository.save(employee);
-            BeanUtils.copyProperties(employee,employeeResponseDto);
-            return employeeResponseDto;
+            return RelationMapperUtils.enAndDtoMapper(employeeResponseDto, employee);
         }
         return null;
     }
@@ -63,10 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponseDto findEmployeeById(int employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        if (employee != null){
+        if (employee != null) {
             EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
-            BeanUtils.copyProperties(employee,employeeResponseDto);
-            return employeeResponseDto;
+            return RelationMapperUtils.enAndDtoMapper(employeeResponseDto, employee);
         }
         return null;
     }

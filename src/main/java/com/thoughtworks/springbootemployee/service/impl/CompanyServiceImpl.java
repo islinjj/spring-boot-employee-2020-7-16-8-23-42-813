@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.utils.RelationMapperUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -45,17 +46,15 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyResponseDto addCompany(Company company) {
         Company result = companyRepository.save(company);
         CompanyResponseDto companyResponseDto = new CompanyResponseDto();
-        BeanUtils.copyProperties(result,companyResponseDto);
-        return companyResponseDto;
+        return RelationMapperUtils.enAndDtoMapper(companyResponseDto, result);
     }
 
     @Override
     public CompanyResponseDto updateCompany(int companyId, Company company) {
         company.setId(companyId);
-        Company updateCompany = companyRepository.save(company);
+        Company updatedCompany = companyRepository.save(company);
         CompanyResponseDto companyResponseDto = new CompanyResponseDto();
-        BeanUtils.copyProperties(updateCompany,companyResponseDto);
-        return companyResponseDto;
+        return RelationMapperUtils.enAndDtoMapper(companyResponseDto, updatedCompany);
     }
 
     @Modifying

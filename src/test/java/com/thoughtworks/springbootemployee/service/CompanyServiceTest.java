@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -49,7 +51,7 @@ class CompanyServiceTest {
 
         //when
         List<Employee> result = companyService.findEmployeesByCompanyId(companyId);
-        Assertions.assertEquals(0, result.size());
+        Assertions.assertNull(result);
     }
 
     @Test
@@ -63,6 +65,46 @@ class CompanyServiceTest {
         //when
         List<Employee> result = companyService.findEmployeesByCompanyId(companyId);
         Assertions.assertEquals(0, result.size());
+    }
+
+    @Test
+    void should_return_1_company_response_dto_when_add_company_given_1_company() {
+        //given
+        Company company = new Company(1,new ArrayList<>(),"oocl");
+        when(companyRepository.save(company)).thenReturn(company);
+
+        //when
+        CompanyResponseDto companyResponseDto = companyService.addCompany(company);
+
+        //then
+        Assertions.assertEquals(company.getName(),companyResponseDto.getName());
+    }
+
+    @Test
+    void should_return_updated_company_response_dto_when_update_company_given_company_id_1_company() {
+        //given
+        Integer companyId = 1;
+        Company company = new Company(1,new ArrayList<>(),"oocl");
+        when(companyRepository.save(company)).thenReturn(company);
+        company.setName("tw");
+
+        //when
+        CompanyResponseDto companyResponseDto = companyService.updateCompany(companyId,company);
+
+        //then
+        Assertions.assertEquals("tw",companyResponseDto.getName());
+    }
+
+    @Test
+    void should_return_void_employees_when_delete_company_given_company_id() {
+        //given
+        Integer companyId = 1;
+
+        //when
+        companyService.deleteEmployeesByCompanyId(companyId);
+
+        //then
+        verify(companyRepository).deleteById(companyId);
     }
 
     public Company initCompany() {

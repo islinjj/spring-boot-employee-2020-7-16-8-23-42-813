@@ -141,6 +141,6 @@ class EmployeeServiceTest {
         List<Employee> employeesByGender = employeeService.findEmployeeByGender(gender);
 
         //then
-        Assertions.assertEquals(employees,employeesByGender);
+        Assertions.assertEquals("male",employeesByGender.get(0).getGender());
     }
 }

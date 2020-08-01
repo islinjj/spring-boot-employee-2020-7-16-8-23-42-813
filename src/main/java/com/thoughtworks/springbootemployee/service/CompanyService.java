@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.thoughtworks.springbootemployee.dto.CompanyRequestDto;
 import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
@@ -22,7 +21,7 @@ public interface CompanyService {
 
     CompanyResponseDto addCompany(Company company);
 
-    void updateCompany(int companyId, Company company);
+    CompanyResponseDto updateCompany(int companyId, Company company);
 
     void deleteEmployeesByCompanyId(int companyId);
 }

@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
-import com.thoughtworks.springbootemployee.dto.CompanyRequestDto;
 import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
@@ -51,9 +50,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void updateCompany(int companyId, Company company) {
+    public CompanyResponseDto updateCompany(int companyId, Company company) {
         company.setId(companyId);
-        companyRepository.save(company);
+        Company updateCompany = companyRepository.save(company);
+        CompanyResponseDto companyResponseDto = new CompanyResponseDto();
+        BeanUtils.copyProperties(updateCompany,companyResponseDto);
+        return companyResponseDto;
     }
 
     @Modifying

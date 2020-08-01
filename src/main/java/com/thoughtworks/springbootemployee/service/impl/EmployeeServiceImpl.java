@@ -61,8 +61,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployeeById(int employeeId) {
-        return employeeRepository.findById(employeeId).orElse(null);
+    public EmployeeResponseDto findEmployeeById(int employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        if (employee != null){
+            EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+            BeanUtils.copyProperties(employee,employeeResponseDto);
+            return employeeResponseDto;
+        }
+        return null;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee findEmployeeById(@PathVariable("employeeId") int employeeId) {
+    public EmployeeResponseDto findEmployeeById(@PathVariable("employeeId") int employeeId) {
         return employeeService.findEmployeeById(employeeId);
     }
 

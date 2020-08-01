@@ -20,7 +20,7 @@ public interface EmployeeService {
 
     EmployeeResponseDto updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto);
 
-    Employee findEmployeeById(int employeeId);
+    EmployeeResponseDto findEmployeeById(int employeeId);
 
     Page<Employee> findAllEmployees(Pageable pageable);
 

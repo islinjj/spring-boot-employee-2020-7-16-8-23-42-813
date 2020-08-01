@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -77,6 +78,21 @@ class CompanyServiceTest {
 
         //then
         Assertions.assertEquals(company.getName(),companyResponseDto.getName());
+    }
+
+    @Test
+    void should_return_updated_company_when_update_company_given_company_id_1_company() {
+        //given
+        Integer companyId = 1;
+        Company company = new Company(1,new ArrayList<>(),"oocl");
+        companyRepository.save(company);
+        company = new Company(1,new ArrayList<>(),"tw");
+
+        //when
+        companyService.updateCompany(companyId,company);
+
+        //then
+        verify(companyRepository).save(company);
     }
 
     public Company initCompany() {

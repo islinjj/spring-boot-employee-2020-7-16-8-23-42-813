@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,29 +74,29 @@ class CompanyServiceTest {
     @Test
     void should_return_1_company_response_dto_when_add_company_given_1_company() {
         //given
-        Company company = new Company(1,new ArrayList<>(),"oocl");
+        Company company = new Company(1, new ArrayList<>(), "oocl");
         when(companyRepository.save(company)).thenReturn(company);
 
         //when
         CompanyResponseDto companyResponseDto = companyService.addCompany(company);
 
         //then
-        Assertions.assertEquals(company.getName(),companyResponseDto.getName());
+        Assertions.assertEquals(company.getName(), companyResponseDto.getName());
     }
 
     @Test
     void should_return_updated_company_response_dto_when_update_company_given_company_id_1_company() {
         //given
         Integer companyId = 1;
-        Company company = new Company(1,new ArrayList<>(),"oocl");
+        Company company = new Company(1, new ArrayList<>(), "oocl");
         when(companyRepository.save(company)).thenReturn(company);
         company.setName("tw");
 
         //when
-        CompanyResponseDto companyResponseDto = companyService.updateCompany(companyId,company);
+        CompanyResponseDto companyResponseDto = companyService.updateCompany(companyId, company);
 
         //then
-        Assertions.assertEquals("tw",companyResponseDto.getName());
+        Assertions.assertEquals("tw", companyResponseDto.getName());
     }
 
     @Test
@@ -105,6 +109,39 @@ class CompanyServiceTest {
 
         //then
         verify(companyRepository).deleteById(companyId);
+    }
+
+    @Test
+    void should_return_1_company_when_find_companies() {
+        //given
+        Company company = new Company(1, new ArrayList<>(), "oocl");
+        List<Company> companies = new ArrayList<>();
+        companies.add(company);
+        when(companyRepository.findAll(Pageable.unpaged())).thenReturn(
+                new PageImpl<>(companies, Pageable.unpaged(), companies.size()));
+
+        //when
+        List<Company> allCompanies = companyService.findAllCompanies(Pageable.unpaged());
+
+        //then
+        Assertions.assertEquals(companies.size(), allCompanies.size());
+    }
+
+    @Test
+    void should_return_1_company_when_find_companies_by_page_given_page_1_and_size_1() {
+        //given
+        Company company = new Company(1, new ArrayList<>(), "oocl");
+        List<Company> companies = new ArrayList<>();
+        companies.add(company);
+        Pageable pageable = PageRequest.of(0, 1);
+        when(companyRepository.findAll(pageable)).thenReturn(
+                new PageImpl<>(companies, pageable, companies.size()));
+
+        //when
+        List<Company> allCompanies = companyService.findAllCompanies(pageable);
+
+        //then
+        Assertions.assertEquals(companies.size(), allCompanies.size());
     }
 
     public Company initCompany() {

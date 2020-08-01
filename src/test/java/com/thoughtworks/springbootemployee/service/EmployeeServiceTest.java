@@ -78,6 +78,18 @@ class EmployeeServiceTest {
         Assertions.assertEquals(18,employeeResponseDto.getAge());
     }
 
+    @Test
+    void should_return_1_employee_when_find_employee_by_id_given_employee_id() {
+        //given
+        Integer employeeId = 1;
+        Employee employee = new Employee(22,"vicky","female");
+        employee.setId(employeeId);
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
 
+        //when
+        EmployeeResponseDto employeeResponseDto = employeeService.findEmployeeById(employeeId);
 
+        //then
+        Assertions.assertEquals(employee.getName(),employeeResponseDto.getName());
+    }
 }

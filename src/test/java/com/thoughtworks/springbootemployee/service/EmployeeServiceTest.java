@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ class EmployeeServiceTest {
         Employee employee = new Employee(22,"sam","male");
         List<Employee> employees = new ArrayList<>();
         employees.add(employee);
-        Page<Employee> employeePage = new PageImpl<Employee>(employees);
+        Page<Employee> employeePage = new PageImpl<>(employees);
         when(employeeRepository.findAll(Pageable.unpaged())).thenReturn(employeePage);
 
         //when
@@ -110,5 +111,21 @@ class EmployeeServiceTest {
 
         //then
         Assertions.assertEquals(employeePage.getTotalElements(),allEmployees.getTotalElements());
+    }
+
+    @Test
+    void should_return_1_employee_when_find_employee_by_page_given_page_0_size_1() {
+        //given
+        Employee employee = new Employee(22,"sam","male");
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee);
+        Page<Employee> employeePage = new PageImpl<Employee>(employees);
+        when(employeeRepository.findAll(PageRequest.of(0,1))).thenReturn(employeePage);
+
+        //when
+        Page<Employee> employeeByPage = employeeService.findAllEmployees(PageRequest.of(0,1));
+
+        //then
+        Assertions.assertEquals(1,employeeByPage.getTotalElements());
     }
 }

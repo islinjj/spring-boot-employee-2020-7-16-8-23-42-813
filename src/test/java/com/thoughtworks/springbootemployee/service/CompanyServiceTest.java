@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -63,6 +64,19 @@ class CompanyServiceTest {
         //when
         List<Employee> result = companyService.findEmployeesByCompanyId(companyId);
         Assertions.assertEquals(0, result.size());
+    }
+
+    @Test
+    void should_return_1_company_response_dto_when_add_company_given_1_company() {
+        //given
+        Company company = new Company(1,new ArrayList<>(),"oocl");
+        when(companyRepository.save(company)).thenReturn(company);
+
+        //when
+        CompanyResponseDto companyResponseDto = companyService.addCompany(company);
+
+        //then
+        Assertions.assertEquals(company.getName(),companyResponseDto.getName());
     }
 
     public Company initCompany() {

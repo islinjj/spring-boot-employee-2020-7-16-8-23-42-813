@@ -18,7 +18,7 @@ public interface EmployeeService {
 
     void deleteEmployeeById(int employeeId);
 
-    void updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto);
+    EmployeeResponseDto updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto);
 
     Employee findEmployeeById(int employeeId);
 

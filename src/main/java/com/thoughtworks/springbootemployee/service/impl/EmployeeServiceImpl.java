@@ -8,13 +8,11 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,12 +48,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
-        Employee employee = employeeRequestDto.toEntity();
-        employee.setId(employeeId);
-        Company company = companyRepository.findById(employeeRequestDto.getCompanyId()).orElse(null);
-        employee.setCompany(company);
-        employeeRepository.save(employee);
+    public EmployeeResponseDto updateEmployee(int employeeId, EmployeeRequestDto employeeRequestDto) {
+        Employee employee = employeeRepository.findById(employeeId).get();
+        if (employee != null){
+            BeanUtils.copyProperties(employeeRequestDto,employee);
+            EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+            employee = this.employeeRepository.save(employee);
+            BeanUtils.copyProperties(employee,employeeResponseDto);
+            return employeeResponseDto;
+        }
+        return null;
     }
 
     @Override

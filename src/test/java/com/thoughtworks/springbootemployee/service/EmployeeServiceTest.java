@@ -14,6 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +94,21 @@ class EmployeeServiceTest {
 
         //then
         Assertions.assertEquals(employee.getName(),employeeResponseDto.getName());
+    }
+
+    @Test
+    void should_return_employees_when_find_all_employees_given_1_employee() {
+        //given
+        Employee employee = new Employee(22,"sam","male");
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee);
+        Page<Employee> employeePage = new PageImpl<Employee>(employees);
+        when(employeeRepository.findAll(Pageable.unpaged())).thenReturn(employeePage);
+
+        //when
+        Page<Employee> allEmployees = employeeService.findAllEmployees(Pageable.unpaged());
+
+        //then
+        Assertions.assertEquals(employeePage.getTotalElements(),allEmployees.getTotalElements());
     }
 }

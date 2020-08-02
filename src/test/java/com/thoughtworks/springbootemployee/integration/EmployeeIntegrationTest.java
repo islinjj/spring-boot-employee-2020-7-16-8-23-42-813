@@ -12,8 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,5 +128,16 @@ public class EmployeeIntegrationTest {
         JSONObject jsonObject = JSONObject.parseObject(result.getResponse().getContentAsString());
         List<Employee> employeesByGender = JSONArray.parseArray(jsonObject.get("content").toString(),Employee.class);
         Assertions.assertEquals(employees.get(0).getGender(),employeesByGender.get(0).getGender());
+    }
+
+    @Test
+    void should_return_500_when_add_employee_given_empty_name() throws Exception {
+        String employeeJson = "{\n" +
+                "    \"age\": 22,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"companyId\" :1\n" +
+                "}";
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeJson)).andReturn();
+        Assertions.assertEquals(500,mvcResult.getResponse().getStatus());
     }
 }

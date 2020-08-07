@@ -7,15 +7,9 @@ pipeline {
     }
 
     stages {
-        stage('test') {
-            steps {
-                echo 'test'
-                bat 'gradle test --stacktrace'
-            }
-        }
         stage('Build') { 
             steps {
-                bat 'gradle clean build' 
+                bat 'gradle clean build -x test' 
             }
         }
         stage('deploy') {

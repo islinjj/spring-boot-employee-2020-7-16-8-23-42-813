@@ -9,10 +9,8 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                bat 'cd ..\\'
-                bat 'xcopy "spring-boot-test" "d:\\deploy\\spring-boot-test"'
-                bat 'cd d:\\deploy\\spring-boot-test'
-                bat 'gradle clean build -x test' 
+                echo 'build'
+                bat 'runBuild.bat'
             }
         }
         stage('deploy') {

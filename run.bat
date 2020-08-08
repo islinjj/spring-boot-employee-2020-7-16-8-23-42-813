@@ -5,4 +5,5 @@ if not "%pid%" == "" (
   rem echo Server is not running.
 )
 
-start /b java -jar d:\deploy\backend-test\spring-boot-employee-0.0.1-SNAPSHOT.jar
+cd /d d:\\deploy\\spring-boot-test\\build\\libs
+start /b java -jar spring-boot-employee-0.0.1-SNAPSHOT.jar

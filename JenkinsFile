@@ -9,13 +9,15 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
+                bat "cd ../"
+                bat "xcopy spring-boot-test d:\\deploy\\spring-boot-test"
+                bat "cd d:\\deploy\\spring-boot-test"
                 bat 'gradle clean build -x test' 
             }
         }
         stage('deploy') {
             steps {
                 echo 'deploy'
-                bat "copy build\\libs\\*.jar d:\\deploy\\backend-test"
                 bat "run.bat"
             }
         }
